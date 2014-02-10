@@ -28,7 +28,8 @@ function save_user_response($response) {
 function create_response_object() {
     $user_response = $_POST['response'];
     $user_response_bit = $user_response == 'YES' ? 1 : 0;
-    $lunch_date = '2014-02-05';
+    $current_date = date('Y-m-d');
+    $lunch_date = date('Y-m-d', strtotime($current_date . ' + 1 day') );
     write_to_log("inside submit_user_response");
     write_to_log("response: " . $user_response_bit . " lunch date: " . $lunch_date);
     $response = new stdClass();
