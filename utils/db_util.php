@@ -12,7 +12,7 @@ function wrapper_mysql_connect($environment) {
 			'host' => '127.0.0.1',
 			'database' => 'chuckwagon',
 			'username' => 'root',
-			'password' => 'root');
+			'password' => 'mysql');
 			
     global $debugOn;
 
