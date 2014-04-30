@@ -5,6 +5,13 @@
         {
             list-style-type: none;
         }
+        .user_name, .user_instruction
+        {
+            width:100px; /* or whatever width you want. */
+            height: 25px;
+            max-width:250px; /* or whatever width you want. */
+            display: inline-block;
+        }
     </style>
 </head>
 <?php
@@ -42,9 +49,23 @@ function display_summary_by_date($date)  {
 }
 
 function display_details_by_date($date) {
-    $details = get_details($date);
-    $count = mysql_num_rows ( $details );
-    echo $count;
+    $result = get_details($date);
+    //print_r($details);
+    $ul = '<ul>';
+    while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
+        $li = get_detail_li($row);
+        $ul .= $li;
+    }
+    $ul .= '</ul>';
+    echo $ul;
+}
+
+function get_detail_li($row) {
+    $li = '<li class="details">';
+    $li .= '<span class="user_name">' . $row['user_name'] . '</span>';
+    $li .= '<span class="user_instructions">' . $row['user_instructions'] . '</span>';
+    $li .=  '</li>';
+    return $li;
 }
 function get_count_by_response($date, $response) {
     $query = "SELECT COUNT(1) FROM response WHERE lunch_date='" . $date . "' AND user_response=" . $response;
