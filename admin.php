@@ -7,7 +7,7 @@
         }
         .user_name, .user_instruction
         {
-            width:100px; /* or whatever width you want. */
+            width:150px; /* or whatever width you want. */
             height: 25px;
             max-width:250px; /* or whatever width you want. */
             display: inline-block;
