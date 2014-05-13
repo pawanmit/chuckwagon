@@ -29,7 +29,9 @@
     <br/>
     <span class="label">Special instructions:</span></span> <input type="text" name="user_instructions" />
     <br/>
-    <input type="submit" value="Submit">
+    <input type="hidden" name="current_date_time" />
+    </br>
+    <input type="submit" name="submit" value="Submit">
 </form>
 <footer>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -39,8 +41,16 @@
             return arg != value;
         }, "Value must not equal arg.");
 
+        $.validator.addMethod("valueLessThan", function(value, element, arg){
+            return value < arg;
+        }, "Orders can not be submitted after 4 PM");
+
         $(document).ready(function () {
+            var d = new Date();
+            var current_hours = d.getHours();
+            $('input[name="current_date_time"]').val(current_hours);
             $('#response_form').validate({ // initialize the plugin
+                ignore: "",
                 rules: {
                     user_name: {
                         required: true,
@@ -48,10 +58,14 @@
                     },
                     user_response: {
                         valueNotEquals: "-1"
+                    },
+                    current_date_time: {
+                        valueLessThan: 16
                     }
                 },
                 messages: {
-                    user_response: { valueNotEquals: "Please select from drop down." }
+                    user_response: { valueNotEquals: "Please select from drop down." },
+                    current_date_time: { valueNotEquals: "Orders can not be submitted after 4 PM." }
                 }
             });
         });
